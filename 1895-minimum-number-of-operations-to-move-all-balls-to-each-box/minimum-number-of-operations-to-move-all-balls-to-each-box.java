@@ -2,16 +2,26 @@ class Solution {
     public int[] minOperations(String boxes) {
         int n = boxes.length();
         int[] answer = new int[n];
-
-        for (int destination = 0; destination < n; destination++) {
-            for (int source = 0; source < n; source++) {
-                if (boxes.charAt(source) == '1') {
-                    answer[destination] +=
-                        Math.abs(destination - source);
-                }
-            }
-        }
-
-        return answer;
+int operation =0;
+int ball =0;
+       for(int i =0;i<n;i++){
+         answer[i] += operation;
+        
+         if(boxes.charAt(i) == '1'){
+            ball++;
+         }
+         
+       operation += ball ;
+       }
+       operation =0;
+        ball =0;
+       for(int i =n-1;i>=0;i--){
+         answer[i] += operation;
+         if(boxes.charAt(i) == '1'){
+            ball++;
+         }    
+       operation += ball ;
+       }
+       return answer;
     }
 }
