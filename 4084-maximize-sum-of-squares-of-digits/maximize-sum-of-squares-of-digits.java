@@ -7,7 +7,7 @@ class Solution {
 
         for(int i =1;i<=num;i++){
             int temp = (sum < 9 )? sum : 9;
-            str.append(temp); 
+            str.append( (char)('0' + temp)); 
             sum -= temp;
         }
         return str.toString();
