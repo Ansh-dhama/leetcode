@@ -10,6 +10,12 @@ List<Integer> list = new ArrayList<>();
                 list.add(entry.getKey());
             }
         }
-        return list.stream().mapToInt(Integer::intValue).toArray();
+        int size = list.size();
+        int[] ans = new int[size];
+int i =0;
+        for(int next :list){
+ans[i++] = next;
+        }
+        return ans;
     }
 }
