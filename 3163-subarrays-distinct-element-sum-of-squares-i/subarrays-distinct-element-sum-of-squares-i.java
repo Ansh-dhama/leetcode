@@ -1,23 +1,25 @@
 class Solution {
     public int sumCounts(List<Integer> nums) {
-        int answer =0;
-     HashSet<Integer> set = new HashSet<>();
-List<Integer> result = new ArrayList<>();
-     for(int i=0;i<nums.size();i++){
-        // result.add(0);
-        for(int j =i;j<nums.size();j++){
-            set.add(nums.get(j));
-            result.add(set.size());
+        int answer = 0;
+        int n = nums.size();
+        int[] seen = new int[101];
 
+        for (int i = 0; i < n; i++) {
+            int distinct = 0;
+            int mark = i + 1;
+
+            for (int j = i; j < n; j++) {
+                int value = nums.get(j);
+
+                if (seen[value] != mark) {
+                    seen[value] = mark;
+                    distinct++;
+                }
+
+                answer += distinct * distinct;
+            }
         }
-     set.clear();
-     }   
 
-     for(int num : result){
-        answer += num *num;
-     }
-     return answer;
-
-
+        return answer;
     }
 }
