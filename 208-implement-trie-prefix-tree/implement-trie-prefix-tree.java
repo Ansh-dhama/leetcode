@@ -18,31 +18,28 @@ TrieNode root;
     }
     
     public boolean search(String word) {
-         TrieNode current = root;
-          for (int i = 0; i < word.length(); i++) {
-            int index = word.charAt(i) - 'a';
-
-            if(current.children[index] == null){
-               return false;
-            }
-            current = current.children[index];
-        }
-        return current.endOfWord;
+        TrieNode node = findNode(word);
+        return node != null && node.endOfWord;
     }
-    
+
     public boolean startsWith(String prefix) {
+        return findNode(prefix) != null;
+    }
+
+    private TrieNode findNode(String text) {
         TrieNode current = root;
 
-          for (int i = 0; i < prefix.length(); i++) {
-            int index = prefix.charAt(i) - 'a';
+        for (int i = 0; i < text.length(); i++) {
+            int index = text.charAt(i) - 'a';
 
-            if(current.children[index] == null){
-                return false;
-            }
             current = current.children[index];
-        }
-        return true;
 
+            if (current == null) {
+                return null;
+            }
+        }
+
+        return current;
     }
     static class  TrieNode{
         TrieNode[] children;
