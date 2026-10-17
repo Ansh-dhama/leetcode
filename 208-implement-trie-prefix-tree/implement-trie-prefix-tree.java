@@ -6,8 +6,8 @@ TrieNode root;
     
     public void insert(String word) {
         TrieNode current = root;
-        for(char ch : word.toCharArray()){
-            int index = ch -'a';
+         for (int i = 0; i < word.length(); i++) {
+            int index = word.charAt(i) - 'a';
 
             if(current.children[index] == null){
                 current.children[index] = new TrieNode();
@@ -19,8 +19,8 @@ TrieNode root;
     
     public boolean search(String word) {
          TrieNode current = root;
-        for(char ch : word.toCharArray()){
-            int index = ch -'a';
+          for (int i = 0; i < word.length(); i++) {
+            int index = word.charAt(i) - 'a';
 
             if(current.children[index] == null){
                return false;
@@ -33,8 +33,8 @@ TrieNode root;
     public boolean startsWith(String prefix) {
         TrieNode current = root;
 
-        for(char ch : prefix.toCharArray()){
-            int index = ch - 'a';
+          for (int i = 0; i < prefix.length(); i++) {
+            int index = prefix.charAt(i) - 'a';
 
             if(current.children[index] == null){
                 return false;
@@ -44,7 +44,7 @@ TrieNode root;
         return true;
 
     }
-    class TrieNode{
+    static class  TrieNode{
         TrieNode[] children;
         boolean endOfWord;
 
