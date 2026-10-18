@@ -1,23 +1,16 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
     private static final long MOD = 1_000_000_007L;
-    private long[][] combinations;
+    private long[][] memo;
 
     public int numOfWays(int[] nums) {
         int n = nums.length;
 
-        combinations = new long[n + 1][n + 1];
+        memo = new long[n + 1][n + 1];
 
-        for (int i = 0; i <= n; i++) {
-            combinations[i][0] = combinations[i][i] = 1;
-
-            for (int j = 1; j < i; j++) {
-                combinations[i][j] =
-                        (combinations[i - 1][j - 1]
-                         + combinations[i - 1][j]) % MOD;
-            }
+        for (long[] row : memo) {
+            Arrays.fill(row, -1);
         }
 
         List<Integer> values = new ArrayList<>();
@@ -27,6 +20,22 @@ class Solution {
         }
 
         return (int) ((count(values) - 1 + MOD) % MOD);
+    }
+    private long combination(int n, int r) {
+        if (r == 0 || r == n) {
+            return 1;
+        }
+
+        if (memo[n][r] != -1) {
+            return memo[n][r];
+        }
+
+        memo[n][r] = (
+                combination(n - 1, r - 1)
+                + combination(n - 1, r)
+        ) % MOD;
+
+        return memo[n][r];
     }
 
     private long count(List<Integer> nums) {
@@ -40,21 +49,20 @@ class Solution {
         List<Integer> right = new ArrayList<>();
 
         for (int i = 1; i < nums.size(); i++) {
-            if (nums.get(i) < root) {
-                left.add(nums.get(i));
+            int value = nums.get(i);
+
+            if (value < root) {
+                left.add(value);
             } else {
-                right.add(nums.get(i));
+                right.add(value);
             }
         }
-
-        int leftCount = left.size();
-        int rightCount = right.size();
 
         long leftWays = count(left);
         long rightWays = count(right);
 
         long mixingWays =
-                combinations[leftCount + rightCount][leftCount];
+                combination(left.size() + right.size(), left.size());
 
         return mixingWays * leftWays % MOD * rightWays % MOD;
     }
