@@ -1,14 +1,18 @@
 class Solution {
     public int maximumCandies(int[] candies, long k) {
         int left =1;
-int right = 0;
-Arrays.sort(candies);
- for(int num : candies){
-     right = Math.max(right , num);
- }
- int ans = 0;
-      
+      long sum = 0;
+int maxPile = 0;
 
+for (int num : candies) {
+    sum += num;
+    maxPile = Math.max(maxPile, num);
+}
+if (sum < k) return 0;
+
+int right = (int) Math.min((long) maxPile, sum / k);
+
+int ans = 0;
       while(left <= right){
         int mid = left + (right - left)/2;
 
@@ -27,7 +31,7 @@ Arrays.sort(candies);
         for(int num : nums){
             if(num >= thres){
                 kids += (num) / thres;
-               if(kids == k) return true;
+               if(kids >= k) return true;
             }
         }
         return kids >= k;
