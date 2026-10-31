@@ -50,6 +50,6 @@ dist[n]=0;
                ways = (ways + dfs(next[0], list, dist)) % MOD;
             }
         }
-        return memo[city] = (int)ways % MOD;
+        return memo[city] = (int)ways;
     }
 }
