@@ -44,12 +44,12 @@ dist[n]=0;
     private int dfs(int city , List<List<int[]>> list , int[] dist){
         if(city == n) return 1;
         if(memo[city]!= null) return memo[city];
-         int ways =0;
+         long ways =0;
         for(int[] next : list.get(city)){
             if(dist[city] > dist[next[0]]){
                ways = (ways + dfs(next[0], list, dist)) % MOD;
             }
         }
-        return memo[city] = ways % MOD;
+        return memo[city] = (int)ways % MOD;
     }
 }
