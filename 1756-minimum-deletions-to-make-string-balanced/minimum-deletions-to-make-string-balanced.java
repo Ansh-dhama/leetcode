@@ -1,24 +1,36 @@
+
 class Solution {
-    Integer[][]  memo;
     public int minimumDeletions(String s) {
-        int n =s.length();
-        memo = new Integer[n][2];
-        return solve(s , 0 , 0);
-    }
-    private int solve(String s , int index , int prevB){
-        if(s.length() <= index) return 0;
-if(memo[index][prevB] != null) return memo[index][prevB];
 
-        if(s.charAt(index)=='b'){
-            int keep  = solve(s , index +1 , 1);
-            int deleteB = 1 + solve(s,index+1 , prevB);
+        int n = s.length();
 
-            return memo[index][prevB] = Math.min(keep , deleteB);
+        int[][] dp = new int[n + 1][2];
+
+        // Base case: dp[n][0] = 0 and dp[n][1] = 0
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            for (int prevB = 0; prevB <= 1; prevB++) {
+
+                if (s.charAt(i) == 'b') {
+
+                    int keep = dp[i + 1][1];
+
+                    int delete = 1 + dp[i + 1][prevB];
+
+                    dp[i][prevB] = Math.min(keep, delete);
+
+                } else {
+
+                    if (prevB == 1) {
+                        dp[i][prevB] = 1 + dp[i + 1][1];
+                    } else {
+                        dp[i][prevB] = dp[i + 1][0];
+                    }
+                }
+            }
         }
-        if(prevB == 1){
-           return memo[index][prevB] = 1 +  solve(s, index + 1 , 1);
-        }
 
-        return memo[index][prevB] = solve(s, index +1 , 0);
+        return dp[0][0];
     }
 }
