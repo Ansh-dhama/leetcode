@@ -14,40 +14,39 @@
  * }
  */
 class Solution {
-    Map<Integer,Integer> height = new HashMap<>();
+    Map<TreeNode,Integer> height = new HashMap<>();
     Map<Integer,Integer> answer = new HashMap<>();
 
     public int[] treeQueries(TreeNode root, int[] queries) {
-        calculateHeight(root);
-calculate(root , 0 ,-1);
-int n = queries.length;
-        int[] ans = new int[n];
-
-        for(int i=0;i<n;i++){
+          calculateHeight(root);
+          calculate(root , 0, -1);
+          int[] ans = new int[queries.length];
+          for(int i =0;i<queries.length;i++){
             ans[i] = answer.get(queries[i]);
-        }
-        return ans;
+          }
+          return ans;
     }
-    private int calculateHeight(TreeNode root ){
+    private int calculateHeight(TreeNode root){
         if(root == null) return -1;
-        int h = 1 + Math.max(calculateHeight(root.left) , 
-            calculateHeight(root.right)
-        );
 
-        height.put(root.val , h);
+        int h = 1 + Math.max(calculateHeight(root.left) , calculateHeight(root.right));
+
+        height.put(root ,h );
+
         return h;
-    } 
-     private int height(TreeNode node) {
-        return node == null ? -1 : height.get(node.val);
     }
-    private void calculate(TreeNode root , int depth , int outSideHeight){
-        if(root == null) return ;
+    private int height(TreeNode root){
+        return root == null ? -1 : height.get(root);
+    }
+    private void calculate(TreeNode root , int depth , int outSide){
 
-        answer.put(root.val , outSideHeight);
-        
-        calculate(root.left , depth +1 ,Math.max(outSideHeight , depth + 1 + height(root.right) ) );
-        calculate(root.right , depth +1 , Math.max(outSideHeight , depth +1 + height(root.left) ) );
+        if(root == null) return;
 
+        answer.put(root.val , outSide);
+
+        calculate(root.left , depth +1 , Math.max(outSide , depth +1 + height(root.right)));
+
+        calculate(root.right , depth +1 , Math.max(outSide , depth +1 + height(root.left)));
 
     }
 }
