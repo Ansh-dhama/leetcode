@@ -18,6 +18,8 @@ class Solution {
     private int solve( int j , int k , String[] words , String target ){
          if(k == target.length()) return 1;
          if(j >= words[0].length()) return 0;
+
+         if(words[0].length() - j < target.length() - k) return 0;
          if(memo[j][k] != null) return memo[j][k];
 
          long notTake =  solve(j+1 , k , words , target  );
